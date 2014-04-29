@@ -1,0 +1,221 @@
+/*
+Framework: Epsilon 1.0.1
+Author: Enabled
+Author URL: http://paultrifa.com
+Description: Custom Mobile Framwork Available Exclusively on ThemeForest and in Enabled/CosminCotor developer projects!
+Version: 1.0.130204
+License: You MAY NOT resell / include in personal or commercial projects.
+License Restrictions: You are not allowed to remove these comments, or take credit for this framework!
+*/
+
+/*////////////////////////////////////////////////////////////////////////*/
+/*---Framework CSS Engine DO NOT EDIT ONLY IF NECESSARY - Epsilon v1.0----*/
+/*////////////////////////////////////////////////////////////////////////*/
+
+
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	outline: none;
+	font-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+}
+*:focus {
+	outline: none;
+}
+
+*,*:after,*:before {	-webkit-box-sizing: border-box;	-moz-box-sizing: border-box;	box-sizing: border-box;	padding: 0;	margin: 0;}
+
+body {
+	margin: 0;
+	padding: 0;
+	line-height: 18px;
+}
+::selection {
+	background: #CCC;
+	color: #fff;
+}
+
+
+p {
+	line-height: 18px;
+	margin-bottom: 20px;
+	font-size: 11px;
+}
+p > a {
+	display: inline;
+	text-decoration: none;
+}
+p > a:hover {
+	text-decoration: underline;
+}
+p > span {
+	display: inline;
+}
+span > a {
+	display: inline;
+}
+a > span {
+	display: inline;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+
+h1 {
+	font-size: 22px;
+	line-height: 26px;
+}
+h2 {
+	font-size: 20px;
+	line-height: 24px;
+	padding-bottom: 1px;
+}
+h3 {
+	font-size: 18px;
+	line-height: 22px;
+	padding-top: 1px;
+}
+h4 {
+	font-size: 16px;
+	line-height: 20px;
+	padding-bottom: 1px;
+}
+h5 {
+	font-size: 14px;
+	line-height: 18px;
+}
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+	display: inline;
+}
+h1, h2, h3, h4, h5{
+	font-weight:600; 
+	margin-bottom:5px;	
+}
+
+
+ul {
+	margin-bottom: 20px;
+}
+
+.regular-list{
+	overflow:visible!important;
+	margin-left:0px;
+}
+
+.number-list li{
+	overflow:visible!important;
+	margin-left:0px;
+	list-style:decimal;
+	margin-left:20px;
+}
+
+ol {
+	margin-bottom: 20px;
+}
+li {
+	font-size:12px;
+	line-height: 18px;
+	margin-bottom:5px;
+	list-style:inside;
+}
+
+ol > li:last-child, ul > li:last-child {
+    margin-bottom:0px;	
+}
+.clear {
+	clear: both;
+	height: 0px;
+	line-height: 0px;
+}
+
+.no-bottom{ 	margin-bottom:0px!important;}
+.half-bottom{	margin-bottom:10px!important;}
+.responsive-image{display:block; max-width:100%;}
+.uppercase{	text-transform:uppercase!important;}
+.float-left{float:left;}
+.float-right{float:right;}
+.center-text{	text-align:center;	}
+.left-text{		text-align:left;	}
+.right-text{	text-align:right;	}
+/*///////////////////////////////////////*/
+/*--------------Data Preloader-----------*/
+/*///////////////////////////////////////*/
+
+#preloader {
+	position:fixed;
+	z-index:2500;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:#fff; 
+	z-index:999999; 
+}
+
+#status {
+	position:fixed;
+	z-index:999999;
+	width:250px;
+	height:250px;
+	position:absolute;
+	left:50%; 
+	top:50%; 
+	background-image:url(../images/status.gif); 
+	background-size:32px 32px;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:-125px 0 0 -125px; 
+}
+
+#status p{
+	top:70%;
+}
+
+#status em{
+	font-size:10px!important;
+	display:block;
+	font-style:normal;
+}
+
+#mapita, #route {
+	width: 100%;
+	height: 100%;
+}
+#route {
+	overflow-y:auto;
+}
+#method {
+
+	
+}
+   .maps-container{
+	display:block!important;
+	border:solid 1px #cacaca;
+	background-color:#FFFFFF;
+	padding:5px;	
+	height:260px;
+	box-sizing:border-box;
+}
+
+.maps{
+	display:block!important;
+	width:100%;
+	height:100%;
+}
+
+
+
+
+
+
