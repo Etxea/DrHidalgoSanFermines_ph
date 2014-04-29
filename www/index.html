@@ -47,30 +47,35 @@ function onDeviceReady() {
     $("#camaras").slideDown("slow");
 });
 }
+
 function getImage() {
-// Retrieve image file location from specified source
-navigator.camera.getPicture(uploadPhoto, function(message) {
-console.log('get picture failed');
-},{
-quality: 50,
-destinationType: 1,//navigator.camera.DestinationType.FILE_URI,
-sourceType: 0 //navigator.camera.PictureSourceType.PHOTOLIBRARY
-}
-);
+    console.log("Somos getImage");
+    // Retrieve image file location from specified source
+    navigator.camera.getPicture(uploadPhoto, function(message) {
+        console.log('Ha fallado get picture error: '+message);
+        },{
+            quality: 50,
+            destinationType: 1,
+            sourceType: 0
+        }
+    );
+    console.log("Fin getImage");
 }
 function getImage1() {
-// Retrieve image file location from specified source
-navigator.camera.getPicture(uploadPhoto, function(message) {
-console.log('get picture failed');
-},{
-quality: 30,
-destinationType: 1,//navigator.camera.DestinationType.FILE_URI,
-sourceType: 1//navigator.camera.PictureSourceType.CAMERA
+    console.log("Somos getImage1");
+    // Retrieve image file location from specified source
+    navigator.camera.getPicture(uploadPhoto, function(message) {
+        console.log('get picture failed');
+    },{
+        quality: 30,
+        destinationType: 1,
+        sourceType: 1
+    }
+    );
 }
-);
-}
+
 function uploadPhoto(imageURI) {
-    console.log("Subimos la foto");
+    console.log("Somos uploadPhoto");
     var options = new FileUploadOptions();
     options.fileKey="file";
     options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
