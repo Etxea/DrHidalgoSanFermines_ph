@@ -34,102 +34,124 @@
 
 <script type="text/javascript" charset="utf-8">
 
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
 
 
-// Wait for PhoneGap to load
-document.addEventListener("deviceready", onDeviceReady, false);
-// PhoneGap is ready
-function onDeviceReady() {
-// Do cool things here...
-    //$("#camaras").hide();
-	//$("#preloader").hide(); // will fade out the white DIV that covers the website.
-	$("#mostrar").click(function() {
-    $("#camaras").slideDown("slow");
-});
-}
-
-function getImage() {
-    console.log("Somos getImage");
-    // Retrieve image file location from specified source
-    navigator.camera.getPicture(uploadPhoto, function(message) {
-        console.log('Ha fallado get picture error: '+message);
-        },{
-            quality: 50,
-            destinationType: 1,
-            sourceType: 0
-        }
-    );
-    console.log("Fin getImage");
-}
-function getImage1() {
-    console.log("Somos getImage1");
-    // Retrieve image file location from specified source
-    navigator.camera.getPicture(uploadPhoto, function(message) {
-        console.log('get picture failed');
-    },{
-        quality: 30,
-        destinationType: 1,
-        sourceType: 1
+    // Wait for PhoneGap to load
+    document.addEventListener("deviceready", onDeviceReady, false);
+    // PhoneGap is ready
+    function onDeviceReady() {
+        console.log("Devide Ready");
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+        //$("#camaras").hide();
+        $("#preloader").hide(); // will fade out the white DIV that covers the website.
+        /* $("#mostrar").click(function() {
+            $("#camaras").slideDown("slow");
+        });*/
     }
-    );
-}
+    
+    // Funcion que sube el post
+    function uploadPhoto(imageURI) {
+        console.log("Somos uploadPhoto. VAMOS A SUBIR "+imageURI);
+        
+        var options = new FileUploadOptions();
+        options.fileKey="file";
+        options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+        options.mimeType="image/jpeg";
+        
+        var params = new Object();
+        params.value1 = "test";
+        params.value2 = "param";
+        
+        options.params = params;
+        options.chunkedMode = false;
+        
+        var url = 'http://sanfermines.ihealthortovas.com/mobile.php';
+        var form_data = {
+            titulo: $("#titulo").val(),
+            categoria: $("#categoria").val(),
+            texto: $("#texto").val(),
+            is_ajax: 1
+        };
+        //alert($("#titulo").val());
+        console.log("Hacemos el POST");
+        $.post(url, form_data, function(data) {
+            console.log("POST hecho");
+            console.log(data);
+        });
+        var ft = new FileTransfer();
+        console.log("Subimos la imagen");
+        ft.upload(imageURI, encodeURI("http://sanfermines.ihealthortovas.com/mobile.php"), win, onFail, options);
+        var pic1 = document.getElementById("image"); 
+        // que hace esto??? if (image == typeof('image')) return;
+        pic1.src = imageURI;
+    }
 
-function uploadPhoto(imageURI) {
-    console.log("Somos uploadPhoto");
-    var options = new FileUploadOptions();
-    options.fileKey="file";
-    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-    options.mimeType="image/jpeg";
-    var params = new Object();
-    params.value1 = "test";
-    params.value2 = "param";
-    options.params = params;
-    options.chunkedMode = false;
-	var url = 'http://sanfermines.ihealthortovas.com/mobile.php';
-		var form_data = {
-			titulo: $("#titulo").val(),
-			categoria: $("#categoria").val(),
-			texto: $("#texto").val(),
-			is_ajax: 1
-				};
-				//alert($("#titulo").val());
-			$.post(url, form_data, function(data) {
-				//alert(data);
-							});
-    var ft = new FileTransfer();
-    ft.upload(imageURI, "http://www.drhidalgo.es/apimobile/mobile.php", win, fail, options);
-    var pic1 = document.getElementById("image"); 
-    if (image == typeof('image')) return;
-    pic1.src = imageURI;
-}
-function win(r) {
-$("#status").fadeIn(); 
-	$("#preloader").fadeIn(500);
-	
+    function onPhotoURISuccess(imageURI) {
+        console.log("SOMOS onPhotoURISuccess");
+        // Uncomment to view the image file URI 
+        console.log(imageURI);
 
-	
-console.log("Code = " + r.responseCode);
-console.log("Response = " + r.response);
-console.log("Sent = " + r.bytesSent);
-var delay = 3000; 
+        uploadPhoto(imageURI);
+        // Get image handle
+        //
+        var largeImage = document.getElementById('image ');
 
-setTimeout(function(){ $("#status").fadeOut(); 
-	$("#preloader").fadeOut(500); 
-	$("#titulo").val("");
-	$("#categoria").val("");
-	$("#texto").val("");
-	$("#image").attr("src","second.jpg");
-$("#camaras").slideUp("slow");
-	
-	}, delay);
-}
-function fail(error) {
-console.log("Error: Code = " = error.code);
-}
+        // Unhide image elements
+        //
+        largeImage.style.display = 'block';
+
+        // Show the captured photo
+        // The inline CSS rules are used to resize the image
+        //
+        largeImage.src = imageURI;
+        console.log("FIN onPhotoURISuccess");
+    }
+
+    function capturePhoto() {
+      // Take picture using device camera and retrieve image 
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 30,
+        destinationType: destinationType.FILE_URI });
+    }
+
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 30, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+
+    // Called if something bad happens.
+    // 
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+    function win(r) {
+        $("#status").fadeIn(); 
+        $("#preloader").fadeIn(500);
+        
+        console.log("Code = " + r.responseCode);
+        console.log("Response = " + r.response);
+        console.log("Sent = " + r.bytesSent);
+        var delay = 3000; 
+
+        setTimeout(function(){ 
+            $("#status").fadeOut(); 
+            $("#preloader").fadeOut(500); 
+            $("#titulo").val("");
+            $("#categoria").val("");
+            $("#texto").val("");
+            $("#image").attr("src","second.jpg");
+            //$("#camaras").slideUp("slow");
+            
+            }, delay);
+    }
 </script>
 </head>
 <body>
-<!--<div id="preloader">
+<div id="preloader">
 	<div id="status">
     	<p class="center-text">
 			<em>Enviando foto...</em>
@@ -137,41 +159,36 @@ console.log("Error: Code = " = error.code);
         </p>
        </div>
 </div>
--->
+
 <div class="header-decoration"></div>
 
 <div class="landing-header">
 	<img class="landing-logo replace-2x" src="images/logo/logo.png"  alt="img" width="148">
 </div>
- <center> 
-<form id="noticia" action="" method="post">
-<fieldset>
-    <legend>Introducir entrada del blog</legend>
+<center> 
+    <form id="noticia" action="" method="post">
+        <fieldset>
+            <legend>Introducir entrada del blog</legend>
+            <input type="hidden" name="URI" id="URI" value="" />
+            <input type="text" name="titulo" id="titulo" placeholder="Título del post" required="required" />
+            <select name="categoria"> 
+                <option value="nosotros">Nosotros</option> 
+                <option value="encierros">Encierros</option> 
+                <option value="corridas">Corridas</option> 
+                <option value="anecdotas">Anécdotas</option>
+            </select>
+            <br>
+            <textarea name="texto" id="texto" placeholder="Texto del post" required="required"></textarea>
+          </fieldset>
+        <!-- <button class="demo-button button-minimal black-minimal" id="mostrar">Foto</button>  -->
+       </form>
+</center>
 
-  
-        <input type="hidden" name="URI" id="URI" value="" />
-
-        <input type="text" name="titulo" id="titulo" placeholder="Título del post" required="required" />
-        <select name="categoria"> 
-		<option value="nosotros">Nosotros</option> 
-		<option value="encierros">Encierros</option> 
-		<option value="corridas">Corridas</option> 
-		<option value="anecdotas">Anécdotas</option>
-		</select>
-<br>
-        <textarea name="texto" id="texto" placeholder="Texto del post" required="required"></textarea>
-
-  </fieldset>
-
-<button class="demo-button button-minimal black-minimal" id="mostrar">Foto</button> </center>
-
- <div class="header-decoration"></div>
-
- <center id="camaras">
-
-<button onclick="getImage();" class="demo-button button-minimal black-minimal">elige foto</button>
-<button onclick="getImage1();" class="demo-button button-minimal black-minimal">haz foto</button>
-<img src="" id="image" width="320" ></center>
-</form>
+<div class="header-decoration"></div>
+<center id="camaras">
+    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" class="demo-button button-minimal black-minimal">elige foto</button>
+    <button onclick="capturePhoto();" class="demo-button button-minimal black-minimal">haz foto</button>
+    <img src="" id="image" width="320" >
+</center>
 </body>
 </html>
