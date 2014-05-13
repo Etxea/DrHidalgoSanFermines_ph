@@ -18,11 +18,7 @@
         donde_estoy();
         
     }
-    function donde_estoy() {
-        console.log("Vamos a probar la geolocation");
-        navigator.geolocation.getCurrentPosition(LocationOnSuccess, LocationOnError,geo_options);
-        console.log("Esperar al callback");
-    }
+    
     
     // Funcion que sube el post
     function uploadPhoto(imageURI) {
@@ -120,8 +116,23 @@
             
             }, delay);
     }
+
+
+/*
+ * Funcion que lanza la geolocalizacion
+ */
+function donde_estoy() {
+        console.log("Vamos a probar la geolocation");
+        navigator.geolocation.getCurrentPosition(LocationOnSuccess, LocationOnError,geo_options);
+        console.log("Esperar al callback");
+    }
+
+
+/*
+ * Callbacks de la localizacion
+ */
     
-    // onSuccess Callback
+// onSuccess Callback
 // This method accepts a Position object, which contains the
 // current GPS coordinates
 //
@@ -145,5 +156,7 @@ function LocationOnError(error) {
     console.log("Callback onserror de geolocation");
     console.log('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
+    console.log("Lo intentamos otra vez");
+    donde_estoy();          
 }
 
