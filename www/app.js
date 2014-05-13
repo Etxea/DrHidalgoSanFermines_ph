@@ -1,6 +1,6 @@
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
-    var geo_options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
+    
 
     // Wait for PhoneGap to load
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -117,10 +117,13 @@
             }, delay);
     }
 
+//Opciones de geolocalizacion
+var geo_options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
 
 /*
  * Funcion que lanza la geolocalizacion
  */
+ 
 function donde_estoy() {
         console.log("Vamos a probar la geolocation");
         navigator.geolocation.getCurrentPosition(LocationOnSuccess, LocationOnError,geo_options);
